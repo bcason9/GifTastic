@@ -1,3 +1,4 @@
+
 var animals = ["Cat", "Dog", "Hamster", "Gecko"];
 
 function renderButtons() {
@@ -5,10 +6,8 @@ function renderButtons() {
 
     for (var i = 0; i < animals.length; i++) {
         var a = $("<button>");
-        
 
-
-        a.addClass("btn-rendered");
+        a.addClass("btn-rendered btn btn-secondary");
         
         a.attr("data-name", animals[i]);
 
@@ -50,13 +49,32 @@ $(document).on("click", ".btn-rendered", function() {
             var gif = $("<p>").text("Rating: " + rating);
 
             var animalGif = $("<img>");
-            animalGif.attr("src", results[i].images.fixed_height.url);
+            animalGif.attr("src", results[i].images.fixed_height_still.url);
+            animalGif.attr("data-still", results[i].images.fixed_height_still.url);
+            animalGif.attr("data-animate", results[i].images.fixed_height.url);
+            animalGif.attr("data-state", "still");
 
-            gifDiv.prepend(animalGif)
+            gifDiv.prepend(animalGif);
             gifDiv.prepend(gif);
             
 
             $("#gif-view").prepend(gifDiv);
+
+            
+            $(animalGif).on("click", function () {
+                var state = $(this).attr("data-state")
+
+                if (state === "still") {
+                    $(this).attr("src", $(this).attr("data-animate"));
+                    $(this).attr("data-state", "animate");
+                } else {
+                    $(this).attr("src", $(this).attr("data-still"));
+                    $(this).attr("data-state", "still");
+                }
+            });
         }
+
+        
     });
+
 });
