@@ -1,6 +1,8 @@
+//topics array
+var animals = ["Cat", "Dog", "Hamster", "Gecko", "Giraffe", "Orangutan", "Koala", "Alligator"];
 
-var animals = ["Cat", "Dog", "Hamster", "Gecko"];
 
+//renders initial array into buttons
 function renderButtons() {
     $("#buttons-div").empty();
 
@@ -18,6 +20,8 @@ function renderButtons() {
 
 }
 
+
+//adds new buttons by adding to initial array
 $("#add-button").on("click", function(event){
     event.preventDefault();
     var newButton = $("#button-input").val().trim();
@@ -27,8 +31,11 @@ $("#add-button").on("click", function(event){
     renderButtons();
 })
 
+//calls function when page opens
 renderButtons();
 
+
+//ajax assigns images and bottom function adds animate click function
 $(document).on("click", ".btn-rendered", function() {
     var animal = $(this).attr("data-name");
     var queryURL = "https://api.giphy.com/v1/gifs/search?q=" +
@@ -48,6 +55,7 @@ $(document).on("click", ".btn-rendered", function() {
 
             var gif = $("<p>").text("Rating: " + rating);
 
+            //attributes include data states for animation
             var animalGif = $("<img>");
             animalGif.attr("src", results[i].images.fixed_height_still.url);
             animalGif.attr("data-still", results[i].images.fixed_height_still.url);
@@ -60,7 +68,7 @@ $(document).on("click", ".btn-rendered", function() {
 
             $("#gif-view").prepend(gifDiv);
 
-            
+            //adds clickable animation
             $(animalGif).on("click", function () {
                 var state = $(this).attr("data-state")
 
